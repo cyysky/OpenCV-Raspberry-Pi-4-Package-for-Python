@@ -1,0 +1,81 @@
+***Install opencv
+# https://gist.github.com/willprice/abe456f5f74aa95d7e0bb81d5a710b60#file-test-py
+
+# extra package https://www.learnopencv.com/install-opencv-4-on-raspberry-pi/
+$ chmod +x *.sh
+$ ./download-opencv.sh
+$ ./install-deps.sh
+$ ./build-opencv.sh
+
+##Fix 4.1.1 build issue
+#https://github.com/opencv/opencv/issues/15192
+# add -latomic to modules/python3/CMakeFiles/opencv_python3.dir/link.txt
+$ cd ~/opencv/opencv-4.1.1/build
+#make clean
+
+# Change Swap before make to avoid raspberry pi hang during make
+$ sudo nano /etc/dphys-swapfile
+sudo dphys-swapfile setup
+set CONF_SWAPSIZE=100 to 512 with the Nano text editor
+$ sudo /etc/init.d/dphys-swapfile stop
+$ sudo /etc/init.d/dphys-swapfile start
+
+make
+
+#make debian package
+ checkinstall --install=no --pkgname=opencv-4.1.1 --pkgversion=4.1.1 --provides=opencv --nodoc --backup=no --exclude=$HOME ----requires="devscripts,debhelper,cmake,libldap2-dev,libgtkmm-3.0-dev,libarchive-dev,libcurl4-openssl-dev,intltool,build-essential,cmake,pkg-config,libjpeg-dev,libtiff5-dev,libjasper-dev,libavcodec-dev,libavformat-dev,libswscale-dev,libv4l-dev,libxvidcore-dev,libx264-dev,libgtk2.0-dev,libgtk-3-dev,libatlas-base-dev,libblas-dev,libeigen2-dev,libeigen3-dev,liblapack-dev,gfortran,python2.7-dev,python3-dev,python-pip,python3-pip,python,python3,libgstreamer1.0-dev,libgstreamer-plugins-base1.0-dev,libavresample-dev,libavresample4-dbgsym,libavresample4,qt5-default"
+
+# sudo make install
+# checkinstall to make debian package https://www.theimpossiblecode.com/blog/build-faster-opencv-raspberry-pi3/
+# checkinstall bug https://github.com/opencv/opencv/issues/8897
+git clone https://github.com/giuliomoro/checkinstall
+cd checkinstall
+make install
+
+# C++ check 
+$ pkg-config --modversion opencv4
+
+# Python 3 Check
+python3
+import cv2
+
+# Python 2 Check
+python
+import cv2
+
+
+***Python3 prepare
+sudo pip3 install imutils
+sudo pip3 install scikit-image
+sudo pip3 install scipy
+
+***Tesseract-ocr prepare
+sudo apt-get install tesseract-ocr
+
+***VisionIC
+Copy Vision to /home/pi/Vision
+Copy VisionIC to /home/pi/Desktop/VisionIC
+#https://www.labdoo.org/content/lxde-create-link-folders-or-files
+Ctrl+Shift and drag /home/pi/Desktop/VisionIC/logs folder to desktop
+
+[Desktop Entry]
+Name=VisionIC
+Comment=VisionIC 1.2.0.0
+Icon=lxterminal
+Exec=lxterminal -e sh /home/pi/Vision/start.sh
+Type=Application
+Encoding=UTF-8
+Terminal=False
+
+
+***Auto Startup
+# https://www.raspberrypi.org/forums/viewtopic.php?t=228532
+# home/pi/.config/lxsession/autostart 
+Edit add /etc/xdg/lxsession/LXDE-pi/autostart
+
+@xset s off
+@xset -dpms
+@lxterminal -e sh /home/pi/Vision/start.sh
+
+***Enable ntfs pendrive
+sudo apt-get install ntfs-3g

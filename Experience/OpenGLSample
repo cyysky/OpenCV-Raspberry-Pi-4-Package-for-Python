@@ -1,0 +1,16 @@
+http://www.codebind.com/linux-tutorials/install-opengl-ubuntu-linux/
+sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+
+
+add following line to link.txt
+-lGL -lGLU -L/usr/include/GL 
+/home/pi/opencv/opencv-4.1.2/build/samples/cpp/CMakeFiles/example_cpp_detect_mser.dir/link.txt
+/home/pi/opencv/opencv-4.1.2/build/samples/opengl/CMakeFiles/example_opengl_opengl_interop.dir/link.txt
+/home/pi/opencv/opencv-4.1.2/build/samples/opengl/CMakeFiles/example_opengl_opengl.dir/link.txt
+
+/home/pi/opencv/opencv-4.1.2/build/samples/cpp/CMakeFiles/example_cpp_detect_mser.dir
+http://www.makble.com/undefined-reference-to-glulookat-how-to-fix-in-mingw-on-windows
+-lopengl32 -lglu32
+
+https://unix.stackexchange.com/questions/423821/gcc-usr-bin-ld-cannot-find-lglut32-lopengl32-lglu32-lfreegut-but-these
+cd /usr/include/GL
