@@ -27,3 +27,5 @@ sudo dpkg -i opencv_4.1.2-1_armhf.deb
 sudo apt-get -f install
 
 sudo dpkg -i opencv_4.1.2-1_armhf.deb
+
+sudo apt-get install tesseract-ocr
