@@ -1,0 +1,46 @@
+chmod +x *.sh
+./install-deps.sh
+./download-opencv.sh
+
+sudo nano /etc/dphys-swapfile
+#set CONF_SWAPSIZE=100 to 512 with the Nano text editor
+sudo dphys-swapfile setup
+sudo /etc/init.d/dphys-swapfile stop
+sudo /etc/init.d/dphys-swapfile start
+
+
+# checkinstall to make debian package https://www.theimpossiblecode.com/blog/build-faster-opencv-raspberry-pi3/
+# checkinstall bug https://github.com/opencv/opencv/issues/8897
+git clone https://github.com/giuliomoro/checkinstall
+cd checkinstall
+sudo make install
+
+./build-opencv.sh
+
+##Fix 4.1.1 build issue
+#https://github.com/opencv/opencv/issues/15192
+# add -latomic to modules/python3/CMakeFiles/opencv_python3.dir/link.txt
+
+##Fix 4.1.2 OpenGL build issue
+#add following line to link.txt
+# -lGL -lGLU -L/usr/include/GL 
+#/home/pi/opencv/opencv-4.1.2/build/samples/cpp/CMakeFiles/example_cpp_detect_mser.dir/link.txt
+#/home/pi/opencv/opencv-4.1.2/build/samples/opengl/CMakeFiles/example_opengl_opengl_interop.dir/link.txt
+#/home/pi/opencv/opencv-4.1.2/build/samples/opengl/CMakeFiles/example_opengl_opengl.dir/link.txt
+
+make
+checkinstall --install=no --pkgname=opencv --pkgversion=4.3.0 --provides=opencv --nodoc --backup=no --exclude=$HOME --requires="devscripts,debhelper,cmake,libldap2-dev,libgtkmm-3.0-dev,libarchive-dev,libcurl4-openssl-dev,intltool,build-essential,cmake,pkg-config,libjpeg-dev,libtiff5-dev,libjasper-dev,libavcodec-dev,libavformat-dev,libswscale-dev,libv4l-dev,libxvidcore-dev,libx264-dev,libgtk2.0-dev,libgtk-3-dev,libatlas-base-dev,libblas-dev,libeigen2-dev,libeigen3-dev,liblapack-dev,gfortran,python2.7-dev,python3-dev,python-pip,python3-pip,python,python3,libgstreamer1.0-dev,libgstreamer-plugins-base1.0-dev,libavresample-dev,libavresample4-dbgsym,libavresample4,qt5-default,tesseract-ocr,libtesseract-dev,libleptonica-dev,libglu1-mesa-dev,freeglut3-dev,mesa-common-dev,liblapacke-dev,libopenblas-dev,libopenblas-base,libgoogle-glog-dev,protobuf-compiler,caffe-cpu"
+#Debian package
+sudo dpkg -i opencv_4.3.0-1_armhf.deb
+sudo apt-get -f install
+sudo dpkg -i opencv_4.3.0-1_armhf.deb
+
+# Python 3 Check
+python3
+import cv2
+
+# Python 2 Check
+python
+import cv2
+
+
