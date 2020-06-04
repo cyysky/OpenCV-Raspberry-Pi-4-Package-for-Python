@@ -15,7 +15,8 @@ sudo dpkg -i opencv_4.3.0-1_armhf.deb       # Now start install
 
 sudo apt-get install tesseract-ocr          # Optional : tesseract-ocr
 
-
+#if have import issue https://github.com/EdjeElectronics/TensorFlow-Object-Detection-on-the-Raspberry-Pi/issues/67
+export LD_PRELOAD=$LD_PRELOAD:/usr/lib/arm-linux-gnueabihf/libatomic.so.1.2.0
 
 
 # Information
