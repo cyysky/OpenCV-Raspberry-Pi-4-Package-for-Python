@@ -17,6 +17,9 @@ sudo dpkg -i opencv_4.5.0-1_armhf.deb       # Now start install
 
 export LD_PRELOAD=$LD_PRELOAD:/usr/lib/arm-linux-gnueabihf/libatomic.so.1.2.0
 
+# Remove Step
+
+sudo apt-get remove opencv
 
 # Information
 Check Raspberry Version
