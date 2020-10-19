@@ -1,19 +1,17 @@
-# OpenCV 4.3.0 For Raspberry Pi 4 Python 2 and 3
+# OpenCV 4.5.0 For Raspberry Pi 3 and 4 Python 2 and 3
 
-Raspbian Buster 10 Pre built OpenCV 4.3.0 
+Raspbian Buster 10 Pre built OpenCV 4.5.0 
 Turned on compile flags TBB NEON VFPV3
 
 # Installation Step
 
-wget https://github.com/cyysky/OpenCV-Raspberry-Pi-4-Package-for-Python/raw/master/opencv_4.3.0-1_armhf.deb
+wget https://github.com/cyysky/OpenCV-Raspberry-Pi-4-Package-for-Python/raw/master/opencv_4.5.0-1_armhf.deb
 
-sudo dpkg -i opencv_4.3.0-1_armhf.deb       # This will install fail for dependency
+sudo dpkg -i opencv_4.5.0-1_armhf.deb       # This will install fail for dependency
 
 sudo apt-get -f install                     # Auto install dependency package
 
-sudo dpkg -i opencv_4.3.0-1_armhf.deb       # Now start install
-
-sudo apt-get install tesseract-ocr          # Optional : tesseract-ocr
+sudo dpkg -i opencv_4.5.0-1_armhf.deb       # Now start install
 
 #if have import issue https://github.com/EdjeElectronics/TensorFlow-Object-Detection-on-the-Raspberry-Pi/issues/67
 
